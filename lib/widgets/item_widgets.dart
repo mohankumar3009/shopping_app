@@ -16,7 +16,12 @@ class ItemWidget extends StatelessWidget {
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       child: ListTile(
-        leading: Image.network(item.imageUrl,errorBuilder: (context, error, stackTrace) => const Icon(Icons.error), width: 50, height: 50, fit: BoxFit.cover),
+        leading: Image.network(item.imageUrl,
+            errorBuilder: (context, error, stackTrace) =>
+                const Icon(Icons.error),
+            width: 50,
+            height: 50,
+            fit: BoxFit.cover),
         title: Text(item.name),
         subtitle: Text("\$${item.price.toStringAsFixed(2)}"),
         trailing: isCartItem

@@ -57,6 +57,36 @@ class CatalogScreen extends StatelessWidget {
         price: 30.45,
         imageUrl:
             'https://up.yimg.com/ib/th/id/OIP.2bhuiUIkeKNothIZ4uMwhQHaHa?pid=Api&rs=1&c=1&qlt=95&w=103&h=103'),
+    Item(
+        name: 'Sunglasses',
+        price: 45.99,
+        imageUrl:
+            'https://images.pexels.com/photos/46710/pexels-photo-46710.jpeg?auto=compress&w=120&h=120'),
+    Item(
+        name: 'Backpack',
+        price: 65.50,
+        imageUrl:
+            'https://images.pexels.com/photos/414171/pexels-photo-414171.jpeg?auto=compress&w=120&h=120'),
+    Item(
+        name: 'Headphones',
+        price: 89.99,
+        imageUrl:
+            'https://images.pexels.com/photos/374870/pexels-photo-374870.jpeg?auto=compress&w=120&h=120'),
+    Item(
+        name: 'Tablet',
+        price: 120.49,
+        imageUrl:
+            'https://images.pexels.com/photos/5082561/pexels-photo-5082561.jpeg?auto=compress&w=120&h=120'),
+    Item(
+        name: 'Smartwatch',
+        price: 75.99,
+        imageUrl:
+            'https://images.pexels.com/photos/267394/pexels-photo-267394.jpeg?auto=compress&w=120&h=120'),
+    Item(
+        name: 'Camera',
+        price: 199.99,
+        imageUrl:
+            'https://tse1.mm.bing.net/th/id/OIP.47PFr_H8LS33py9fj-qOwQHaE8?pid=Api&P=0&h=180'),
   ];
 
   @override
@@ -65,7 +95,7 @@ class CatalogScreen extends StatelessWidget {
       backgroundColor: Colors.black54,
       appBar: AppBar(
         backgroundColor: Colors.amberAccent,
-        title: const Text("Catalog", style: TextStyle(color: Colors.black)),
+        title: const Text("Shopping List", style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold)),
         leading: Builder(
           builder: (context) => Tooltip(
             message: 'Drawer',
@@ -89,11 +119,6 @@ class CatalogScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(4),
                 borderRadius: BorderRadius.circular(20),
                 borderSide: const BorderSide(color: Colors.white, width: 1),
-              ),
-              badgeAnimation: badges.BadgeAnimation.scale(
-                animationDuration: const Duration(milliseconds: 500),
-                curve: Curves.elasticInOut,
-                toAnimate: true,
               ),
               badgeContent: SizedBox(
                 width: 15,
@@ -119,7 +144,7 @@ class CatalogScreen extends StatelessWidget {
         ],
       ),
       drawer: Drawer(
-        elevation: 16,
+        elevation: 4,
         backgroundColor: Colors.black38,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadiusDirectional.only(

@@ -16,55 +16,67 @@ class CartScreen extends StatelessWidget {
         title: const Text("Cart", style: TextStyle(color: Colors.black)),
         backgroundColor: Colors.amberAccent,
       ),
-      body: Consumer<CartProvider>(
-        builder: (context, provider, child) => Column(
-          children: [
-            Expanded(
-              child: provider.cartItems.isEmpty
-                  ? const Center(
-                      child: Text(
-                        "Your cart is empty please provide the cart items and continue shopping.",
-                        style: TextStyle(
-                          color: Colors.white,
-                          overflow: TextOverflow.ellipsis,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 12,
-                        ),
-                      ),
-                    )
-                  : ListView.builder(
-                      itemCount: provider.cartItems.length,
-                      itemBuilder: (context, index) => ItemWidget(
-                        isCartItem: true,
-                        item: provider.cartItems[index],
-                      ),
-                    ),
-            ),
-            const SizedBox(height: 5),
-            ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: const Color.fromARGB(255, 38, 143, 42),
+      body: FutureBuilder(
+        future: Future.delayed(const Duration(seconds: 2)),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState != ConnectionState.done) {
+            return const Center(
+              child: CircularProgressIndicator(
+                color: Colors.amberAccent,
               ),
-              onPressed: provider.cartItems.isEmpty
-                  ? null
-                  : () {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(
-                            "Purchased items for \$${provider.totalPrice}",
+            );
+          }
+          return Consumer<CartProvider>(
+            builder: (context, provider, child) => Column(
+              children: [
+                Expanded(
+                  child: provider.cartItems.isEmpty
+                      ? const Center(
+                          child: Text(
+                            "  Your cart is empty please provide the cart items and continue shopping on online stores.",
+                            style: TextStyle(
+                              color: Colors.white,
+                              overflow: TextOverflow.ellipsis,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15,
+                            ),
+                          ),
+                        )
+                      : ListView.builder(
+                          itemCount: provider.cartItems.length,
+                          itemBuilder: (context, index) => ItemWidget(
+                            isCartItem: true,
+                            item: provider.cartItems[index],
                           ),
                         ),
-                      );
-                      provider.clearCart();
-                    },
-              child: Text(
-                "Buy \$${provider.totalPrice.toStringAsFixed(2)}",
-                style: const TextStyle(color: Colors.white),
-              ),
+                ),
+                const SizedBox(height: 5),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: const Color.fromARGB(255, 38, 143, 42),
+                  ),
+                  onPressed: provider.cartItems.isEmpty
+                      ? null
+                      : () {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                "Purchased items for \$${provider.totalPrice}",
+                              ),
+                            ),
+                          );
+                          provider.clearCart();
+                        },
+                  child: Text(
+                    "Buy \$${provider.totalPrice.toStringAsFixed(2)}",
+                    style: const TextStyle(color: Colors.white),
+                  ),
+                ),
+                const SizedBox(height: 20),
+              ],
             ),
-            const SizedBox(height: 20),
-          ],
-        ),
+          );
+        }
       ),
     );
   }
