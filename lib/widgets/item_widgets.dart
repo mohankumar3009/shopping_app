@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import 'package:shopping_app/models/list_model.dart';
 import 'package:shopping_app/providers/cart_provider.dart';
 
@@ -17,6 +16,7 @@ class ItemWidget extends StatelessWidget {
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       child: ListTile(
+        leading: Image.network(item.imageUrl,errorBuilder: (context, error, stackTrace) => const Icon(Icons.error), width: 50, height: 50, fit: BoxFit.cover),
         title: Text(item.name),
         subtitle: Text("\$${item.price.toStringAsFixed(2)}"),
         trailing: isCartItem

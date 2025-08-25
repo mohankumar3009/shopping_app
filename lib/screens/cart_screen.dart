@@ -23,11 +23,12 @@ class CartScreen extends StatelessWidget {
               child: provider.cartItems.isEmpty
                   ? const Center(
                       child: Text(
-                        "Your cart is empty",
+                        "Your cart is empty please provide the cart items and continue shopping.",
                         style: TextStyle(
                           color: Colors.white,
+                          overflow: TextOverflow.ellipsis,
                           fontWeight: FontWeight.bold,
-                          fontSize: 17,
+                          fontSize: 12,
                         ),
                       ),
                     )
