@@ -1,4 +1,7 @@
 import 'dart:collection';
+// ignore: unused_import
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 
 import 'package:shopping_app/models/list_model.dart';
@@ -30,6 +33,17 @@ class CartProvider extends ChangeNotifier {
     _cartItems.clear();
     _counter = 0;
     notifyListeners();
+  }
+
+  void deleteItem(Item item) {
+    _cartItems.removeWhere((i) => i == item);
+    _counter = _cartItems.length;
+    notifyListeners();
+  }
+
+
+  int getItemQuantity(Item item) {
+    return _cartItems.where((i) => i == item).length;
   }
 
   String itemAddedMessage(Item item) => "${item.name} added to cart";

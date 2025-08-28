@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-
 import 'package:provider/provider.dart';
 import 'package:shopping_app/models/list_model.dart';
 import 'package:shopping_app/widgets/item_widgets.dart';
 import '../providers/cart_provider.dart';
-
 import 'cart_screen.dart';
 import 'package:badges/badges.dart' as badges;
 
@@ -66,12 +64,12 @@ class CatalogScreen extends StatelessWidget {
         name: 'Backpack',
         price: 65.50,
         imageUrl:
-            'https://images.pexels.com/photos/414171/pexels-photo-414171.jpeg?auto=compress&w=120&h=120'),
+            'https://sp.yimg.com/ib/th/id/OIP.Penytr3b5P6-5NvVg_myHwHaLG?pid=Api&w=148&h=148&c=7&dpr=2&rs=1'),
     Item(
         name: 'Headphones',
         price: 89.99,
         imageUrl:
-            'https://images.pexels.com/photos/374870/pexels-photo-374870.jpeg?auto=compress&w=120&h=120'),
+            'https://sp.yimg.com/ib/th/id/OIP.nguYtVUq6HJBUPjnlfrnjwHaE7?pid=Api&w=148&h=148&c=7&dpr=2&rs=1'),
     Item(
         name: 'Tablet',
         price: 120.49,
@@ -91,11 +89,13 @@ class CatalogScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final uniqueCatalog = catalog.toSet().toList();
     return Scaffold(
       backgroundColor: Colors.black54,
       appBar: AppBar(
         backgroundColor: Colors.amberAccent,
-        title: const Text("Shopping List", style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold)),
+        title: const Text("Shopping List",
+            style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold)),
         leading: Builder(
           builder: (context) => Tooltip(
             message: 'Drawer',
@@ -156,62 +156,53 @@ class CatalogScreen extends StatelessWidget {
           padding: EdgeInsets.zero,
           children: [
             UserAccountsDrawerHeader(
-              accountName: const Text(
-                'Mohan',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              accountEmail: const Text(
-                '210921205006',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              currentAccountPicture: const CircleAvatar(
-                child: Icon(Icons.person),
-              ),
+              accountName: const Text('Mohan',
+                  style: TextStyle(
+                      color: Colors.black, fontWeight: FontWeight.bold)),
+              accountEmail: const Text('210921205006',
+                  style: TextStyle(
+                      color: Colors.black, fontWeight: FontWeight.bold)),
+              currentAccountPicture:
+                  const CircleAvatar(child: Icon(Icons.person)),
               decoration: BoxDecoration(color: Colors.amberAccent),
             ),
             ListTile(
               leading: const Icon(Icons.home_filled, color: Colors.grey),
-              title: Text('Catalog', style: TextStyle(color: Colors.white)),
-              trailing: Icon(
-                Icons.arrow_forward_ios_sharp,
-                color: Colors.amberAccent,
-              ),
+              title:
+                  const Text('Catalog', style: TextStyle(color: Colors.white)),
+              trailing: const Icon(Icons.arrow_forward_ios_sharp,
+                  color: Colors.amberAccent),
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => CatalogScreen()),
-                );
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => CatalogScreen()));
               },
             ),
             ListTile(
-              leading: const Icon(
-                Icons.add_shopping_cart_rounded,
-                color: Colors.grey,
-              ),
-              title: Text('cart', style: TextStyle(color: Colors.white)),
-              trailing: Icon(
-                Icons.arrow_forward_ios_sharp,
-                color: Colors.amberAccent,
-              ),
+              leading: const Icon(Icons.add_shopping_cart_rounded,
+                  color: Colors.grey),
+              title: const Text('Cart', style: TextStyle(color: Colors.white)),
+              trailing: const Icon(Icons.arrow_forward_ios_sharp,
+                  color: Colors.amberAccent),
               onTap: () {
                 Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => CartScreen()),
-                );
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const CartScreen()));
               },
             ),
           ],
         ),
       ),
-      body: ListView.builder(
-        itemCount: catalog.length,
-        itemBuilder: (context, index) => ItemWidget(item: catalog[index]),
+      body: GridView.builder(
+        itemCount: uniqueCatalog.length,
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          crossAxisSpacing: 8,
+          mainAxisSpacing: 8,
+          childAspectRatio: 0.75,
+        ),
+        padding: const EdgeInsets.all(8),
+        itemBuilder: (context, index) => ItemWidget(item: uniqueCatalog[index]),
       ),
     );
   }
