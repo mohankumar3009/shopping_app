@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'providers/cart_provider.dart';
-import 'screens/catalog_screen.dart';
+import 'screens/shopping_list_screen.dart';
 import 'package:flutter/services.dart';
+import 'providers/theme_provider.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -13,7 +14,13 @@ void main() {
     DeviceOrientation.landscapeRight,
   ]);
   runApp(
-    ChangeNotifierProvider(create: (_) => CartProvider(), child: const MyApp()),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => CartProvider()),
+        ChangeNotifierProvider(create: (_) => ThemeProvider()),
+      ],
+      child: const MyApp(),
+    ),
   );
 }
 
@@ -22,11 +29,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ThemeProvider themeProvider = Provider.of<ThemeProvider>(context);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "Shopping Cart Demo",
-      theme: ThemeData(primarySwatch: Colors.red),
-      home: ResponsiveWrapper(child: CatalogScreen()),
+      theme: themeProvider.currentTheme,
+      home: ResponsiveWrapper(child: ShoppingListScreen()),
     );
   }
 }

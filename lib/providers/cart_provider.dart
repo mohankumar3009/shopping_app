@@ -1,6 +1,5 @@
 import 'dart:collection';
-// ignore: unused_import
-import 'dart:ffi';
+
 
 import 'package:flutter/material.dart';
 
@@ -16,7 +15,7 @@ class CartProvider extends ChangeNotifier {
 
   double get totalPrice =>
       _cartItems.fold<double>(0.0, (prev, element) => prev + element.price);
-
+                                  
   void addItem(Item item) {
     _cartItems.add(item);
     _counter = _cartItems.length;

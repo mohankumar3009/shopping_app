@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shopping_app/models/list_model.dart';
 import 'package:shopping_app/providers/cart_provider.dart';
+import 'dart:math';
 
 class ItemWidget extends StatelessWidget {
   final Item item;
@@ -11,7 +12,7 @@ class ItemWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cart = Provider.of<CartProvider>(context, listen: false);
+    final cart = Provider.of<CartProvider>(context, listen: true);
 
     return SingleChildScrollView(
       child: Card(
@@ -174,6 +175,8 @@ class ItemGrid extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final orientation = MediaQuery.of(context).orientation;
+    final width = MediaQuery.of(context).size.width;
     final uniqueItems = {
       for (var item in items) item.name: item,
     }.values.toList();
@@ -182,16 +185,19 @@ class ItemGrid extends StatelessWidget {
 
     return GridView.builder(
       padding: const EdgeInsets.all(8),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        childAspectRatio: 0.75,
-        crossAxisSpacing: 10,
-        mainAxisSpacing: 10,
-      ),
+      physics: ScrollPhysics(),
+      scrollDirection: Axis.vertical,
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisSpacing: 10,
+          mainAxisSpacing: 10,
+          crossAxisCount:
+              orientation == Orientation.landscape ? 4 : max(2, width ~/ 250),
+          childAspectRatio: orientation == Orientation.landscape ? 0.8 : 0.7),
       itemCount: displayItems.length,
       itemBuilder: (context, index) {
         final item = displayItems[index];
-        return ItemWidget(item: item, isCartItem: isCart);
+        return SingleChildScrollView(
+            child: ItemWidget(item: item, isCartItem: isCart));
       },
     );
   }

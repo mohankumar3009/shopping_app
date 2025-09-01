@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shopping_app/models/list_model.dart';
+import 'package:shopping_app/providers/theme_provider.dart';
 import 'package:shopping_app/widgets/item_widgets.dart';
 import '../providers/cart_provider.dart';
 import 'cart_screen.dart';
 import 'package:badges/badges.dart' as badges;
 
-class CatalogScreen extends StatelessWidget {
-  CatalogScreen({super.key});
+class ShoppingListScreen extends StatelessWidget {
+  ShoppingListScreen({super.key});
 
   final List<Item> catalog = [
     Item(
@@ -90,8 +91,10 @@ class CatalogScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final uniqueCatalog = catalog.toSet().toList();
+    final ThemeProvider themeProvider =
+        Provider.of<ThemeProvider>(context, listen: false);
     return Scaffold(
-      backgroundColor: Colors.black54,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: AppBar(
         backgroundColor: Colors.amberAccent,
         title: const Text("Shopping List",
@@ -173,8 +176,10 @@ class CatalogScreen extends StatelessWidget {
               trailing: const Icon(Icons.arrow_forward_ios_sharp,
                   color: Colors.amberAccent),
               onTap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => CatalogScreen()));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => ShoppingListScreen()));
               },
             ),
             ListTile(
@@ -190,19 +195,51 @@ class CatalogScreen extends StatelessWidget {
                         builder: (context) => const CartScreen()));
               },
             ),
+            ListTile(
+              leading: const Icon(
+                Icons.dark_mode_outlined,
+                color: Colors.grey,
+              ),
+              title: const Text(
+                'Theme',
+                style: TextStyle(color: Colors.white),
+              ),
+              trailing: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.transparent,
+                    iconColor: Colors.amberAccent),
+                onPressed: () => themeProvider.toggleTheme(),
+                child: themeProvider.isDark
+                    ? const Icon(Icons.dark_mode_outlined)
+                    : const Icon(Icons.light_mode_sharp),
+              ),
+            ),
           ],
         ),
       ),
-      body: GridView.builder(
-        itemCount: uniqueCatalog.length,
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          crossAxisSpacing: 8,
-          mainAxisSpacing: 8,
-          childAspectRatio: 0.75,
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            const SizedBox(height: 50),
+            SizedBox(
+              height: 320,
+              width: double.infinity,
+              child: GridView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: uniqueCatalog.length,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 1,
+                  crossAxisSpacing: 8,
+                  mainAxisSpacing: 8,
+                  childAspectRatio: 1.5,
+                ),
+                padding: const EdgeInsets.all(8),
+                itemBuilder: (context, index) =>
+                    ItemWidget(item: uniqueCatalog[index]),
+              ),
+            ),
+          ],
         ),
-        padding: const EdgeInsets.all(8),
-        itemBuilder: (context, index) => ItemWidget(item: uniqueCatalog[index]),
       ),
     );
   }
