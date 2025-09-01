@@ -24,13 +24,13 @@ class ItemWidget extends StatelessWidget {
                 SizedBox(
                   height: 130,
                   child: Stack(
-                    alignment:AlignmentGeometry.topRight ,
+                    alignment: AlignmentGeometry.topRight,
                     fit: StackFit.expand,
                     clipBehavior: Clip.hardEdge,
                     children: [
                       Image.network(item.imageUrl,
                           errorBuilder: (context, error, stackTrace) =>
-                          const Icon(Icons.error),
+                              const Icon(Icons.error),
                           fit: BoxFit.cover),
                       if (isCartItem)
                         Positioned(
